@@ -1,17 +1,21 @@
-import React, { useState } from "react";
-import BuildingForm from "./components/BuildingForm";
+import React from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import Home from "./views/Home";
+import BuildingVisitors from "./views/BuildingVisitors";
 import "./App.css";
+
 function App() {
   return (
-    <div className="App">
-      <BuildingForm />
-      <form>
-        <h2>Form to add new user in a building</h2>
-        <input type="text" placeholder="name" />
-        <input type="number" placeholder="phone number" />
-        <input type="text" placeholder="Address" />
-        <button type="submit">Submit</button>
-      </form>
+    <div>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route
+          exact
+          path="/building/:id/visitors"
+          component={BuildingVisitors}
+        />
+        <Redirect to="/" />
+      </Switch>
     </div>
   );
 }
