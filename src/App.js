@@ -1,27 +1,35 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-import Sidebar from "components/Sidebar";
-import Dashboard from "pages/Dashboard";
-import Settings from "pages/Settings";
-import ProfilePage from "pages/ProfilePage";
-import GenerateQR from "pages/GenerateQR";
-import Footer from "components/Footer";
-
-// Tailwind CSS Style Sheet
+import Dashboard from "pages/building/Dashboard";
+import GenerateQR from "pages/building/GenerateQR";
+import ProfilePage from "pages/building/ProfilePage";
+import Settings from "pages/building/Settings";
+import BuildingVisitorForm from "pages/BuildingVisitorForm";
+import ScanQR from "pages/ScanQR";
+import VisitorForm from "components/VisitorForm";
 import "assets/styles/tailwind.css";
-
 function App() {
   return (
     <>
-      <Sidebar />
       <div className="md:ml-64">
         <Switch>
-          <Route exact path="/" component={Dashboard} />
-          <Route exact path="/settings" component={Settings} />
-          <Route exact path="/profile" component={ProfilePage} />
-          <Route exact path="/GenerateQR" component={GenerateQR} />
-          <Redirect from="*" to="/" />
+          {/* Building Routes */}
+          <Route exact path="/building/:id" component={Dashboard} />
+          <Route exact path="/building/:id/GenerateQR" component={GenerateQR} />
+          <Route exact path="/building/:id/profile" component={ProfilePage} />
+          <Route exact path="/building/:id/settings" component={Settings} />
+
+          {/* User routes */}
+          <Route exact path="/user/:uid/scanQR" component={ScanQR} />
+
+          {/* Visitor Form for building */}
+          <Route
+            exact
+            path="/building/:bid/form/:uid"
+            component={BuildingVisitorForm}
+          />
+
+          <Redirect from="*" to="/building/614c73d775c63e60e419ab85" />
         </Switch>
-        <Footer />
       </div>
     </>
   );

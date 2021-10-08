@@ -1,19 +1,29 @@
+import React, { useState, useEffect } from "react";
 import Card from "@material-tailwind/react/Card";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardBody from "@material-tailwind/react/CardBody";
 import Image from "@material-tailwind/react/Image";
-import Progress from "@material-tailwind/react/Progress";
-import Team1 from "assets/img/team-1-800x800.jpg";
-import Team2 from "assets/img/team-2-800x800.jpg";
-import Team3 from "assets/img/team-3-800x800.jpg";
 import Team4 from "assets/img/team-4-470x470.png";
+import axios from "axios";
 
-export default function CardTable() {
+export default function CardTable({ bid }) {
+  const date = new Date();
+  const today = date.toDateString();
+  const [visitors, setVisitors] = useState(null);
+  useEffect(() => {
+    const fetchVisitors = async () => {
+      var URL = "/api/building/" + bid;
+      const { data } = await axios.get(URL).catch((err) => console.log(err));
+      setVisitors(data);
+    };
+    fetchVisitors();
+  }, []);
   return (
     <Card>
       <CardHeader color="blue" contentPosition="left">
-        <h2 className="text-white text-2xl">Visitors Today</h2>
+        <h2 className="text-white text-2xl">Visitors Today: {today}</h2>
       </CardHeader>
+
       <CardBody>
         <div className="overflow-x-auto">
           <table className="items-center w-full bg-transparent border-collapse">
@@ -37,95 +47,33 @@ export default function CardTable() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  Argon Design System
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  $2,500 USD
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <i className="fas fa-circle fa-sm text-orange-500 mr-2"></i>{" "}
-                  pending
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <div className="flex">
-                    <div className="w-10 h-10 rounded-full border-2 border-white ">
-                      <Image src={Team4} rounded alt="..." />
-                    </div>
-                  </div>
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  12.00AM
-                </th>
-              </tr>
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  Black Dashboard Sketch
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  $1,800 USD
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <i className="fas fa-circle fa-sm text-blue-gray-900 mr-2"></i>{" "}
-                  completed
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <div className="flex">
-                    <div className="w-10 h-10 rounded-full border-2 border-white ">
-                      <Image src={Team4} rounded alt="..." />
-                    </div>
-                  </div>
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  12.00AM
-                </th>
-              </tr>
-
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  React Material Dashboard
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  $4,400 USD
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <i className="fas fa-circle fa-sm text-teal-500 mr-2"></i> on
-                  schedule
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <div className="flex">
-                    <div className="w-10 h-10 rounded-full border-2 border-white ">
-                      <Image src={Team4} rounded alt="..." />
-                    </div>
-                  </div>
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  12.00AM
-                </th>
-              </tr>
-              <tr>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  React Material Dashboard
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  $2,200 USD
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <i className="fas fa-circle fa-sm text-blue-gray-900 mr-2"></i>{" "}
-                  completed
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  <div className="flex">
-                    <div className="w-10 h-10 rounded-full border-2 border-white ">
-                      <Image src={Team4} rounded alt="..." />
-                    </div>
-                  </div>
-                </th>
-                <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                  12.00AM
-                </th>
-              </tr>
+              {visitors &&
+                visitors.visitors.map((item) => {
+                  return (
+                    <tr>
+                      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                        {item.vName}
+                      </th>
+                      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                        {item.vPhone}
+                      </th>
+                      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                        <i className="fas fa-circle fa-sm text-orange-500 mr-2"></i>{" "}
+                        {item.visitAddress}
+                      </th>
+                      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                        <div className="flex">
+                          <div className="w-10 h-10 rounded-full border-2 border-white ">
+                            <Image src={Team4} rounded alt="..." />
+                          </div>
+                        </div>
+                      </th>
+                      <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                        {item.visitTime}
+                      </th>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

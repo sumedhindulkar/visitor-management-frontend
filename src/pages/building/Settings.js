@@ -1,10 +1,13 @@
-import StatusCard from "components/StatusCard";
 import SettingsForm from "components/SettingsForm";
-import ProfileCard from "components/ProfileCard";
+import { useParams } from "react-router-dom";
+import Sidebar from "components/Sidebar";
 
-export default function Dashboard() {
+import Footer from "components/Footer";
+export default function Settings() {
+  const { id } = useParams();
   return (
     <>
+      <Sidebar bid={id} />
       <div className="bg-light-blue-500 pt-14 pb-28 px-3 md:px-8 h-auto">
         {/* <div className="container mx-auto max-w-full">
                     <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4">
@@ -64,6 +67,8 @@ export default function Dashboard() {
           {/* </div> */}
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }

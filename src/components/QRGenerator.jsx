@@ -5,21 +5,13 @@ import CardRow from "@material-tailwind/react/CardRow";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardStatus from "@material-tailwind/react/CardStatus";
 import CardStatusFooter from "@material-tailwind/react/CardStatusFooter";
-import Icon from "@material-tailwind/react/Icon";
-import H2 from "@material-tailwind/react/Heading5";
+// import Icon from "@material-tailwind/react/Icon";
+
+import TimelineIcon from "@mui/icons-material/Timeline";
 import Button from "@material-tailwind/react/Button";
-export default function QRGenerator({
-  color,
-  icon,
-  title,
-  amount,
-  percentage,
-  percentageColor,
-  percentageIcon,
-  date,
-}) {
+export default function QRGenerator({ color, icon, title, amount, bid }) {
   // const [link, setLink] = useState();
-  const link = "https://github.com/sumedhindulkar";
+  const link = "http://localhost:3000/building/" + bid + "/form/";
   const [image, setImage] = useState(null);
   const generateQR = async () => {
     try {
@@ -36,7 +28,7 @@ export default function QRGenerator({
       <Card>
         <CardRow>
           <CardHeader color={color} iconOnly className="mb-0">
-            <Icon name={icon} size="3xl" color="white" />
+            <TimelineIcon fontSize="large" />
           </CardHeader>
 
           <CardStatus title={title} amount={amount} />
@@ -44,7 +36,7 @@ export default function QRGenerator({
 
         <CardStatusFooter>
           <div className="w-full flex justify-center py-4 lg:pt-4 pt-8">
-            <H2>Generate your unique QR code</H2>
+            <h2>Generate your unique QR code</h2>
             <Button onClick={() => generateQR()} className="ml-4" color="red">
               Generate
             </Button>

@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import AdminNavbar from "./AdminNavbar";
+import FingerprintIcon from "@mui/icons-material/Fingerprint";
 import { useLocation } from "react-router-dom";
-// Icons
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import SettingsIcon from '@mui/icons-material/Settings';
-import QrCodeIcon from '@mui/icons-material/QrCode';
+import CropFreeIcon from '@mui/icons-material/CropFree';
 import LogoutIcon from '@mui/icons-material/Logout';
-export default function Sidebar({bid}) {
+export default function UserSidebar() {
   const [showSidebar, setShowSidebar] = useState("-left-64");
   const location = useLocation().pathname;
-  const { id } = useParams();
+  const { uid } = useParams();
   return (
     <>
       <AdminNavbar showSidebar={showSidebar} setShowSidebar={setShowSidebar} />
@@ -31,19 +31,19 @@ export default function Sidebar({bid}) {
             <hr className="my-4 min-w-full" />
 
             <ul className="flex-col min-w-full flex list-none">
-              <li className="rounded-lg mb-4">
+              {/* <li className="rounded-lg mb-4">
                 <NavLink
-                  to={"/building/" +bid }
+                  to={"/building/" +uid }
                   exact
                   className="flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-3 rounded-lg"
                   activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
                 >
                   <DashboardIcon /> Dashboard
                 </NavLink>
-              </li>
+              </li> */}
               <li className="rounded-lg mb-4">
                 <NavLink
-                  to={"/building/" +bid +"/profile"}
+                  to={"/user/" +uid +"/profile"}
                   exact
                   className="flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-3 rounded-lg"
                   activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
@@ -55,7 +55,7 @@ export default function Sidebar({bid}) {
 
               <li className="rounded-lg mb-2">
                 <NavLink
-                  to={"/building/" +bid +"/settings"}
+                  to={"/user/" +uid +"/settings"}
                   className="flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-3 rounded-lg"
                   activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
                 >
@@ -65,11 +65,11 @@ export default function Sidebar({bid}) {
 
               <li className="rounded-lg mb-2 text-gray-700">
                 <NavLink
-                  to={"/building/" +bid +"/GenerateQR"}
+                  to={"/user/" +uid +"/scanQR"}
                   className="flex items-center gap-4 text-sm text-gray-700 font-light px-4 py-3 rounded-lg"
                   activeClassName="bg-gradient-to-tr from-light-blue-500 to-light-blue-700 text-white shadow-md"
                 >
-                  <QrCodeIcon /> Generate QR Code
+                  <CropFreeIcon /> Scan QR Code
                 </NavLink>
               </li>
               <li className="px-4 rounded-lg mb-2 text-gray-700">
