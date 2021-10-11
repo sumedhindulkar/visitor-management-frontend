@@ -3,11 +3,23 @@ import { useParams } from "react-router-dom";
 import StatusCard from "components/StatusCard";
 import TableCard from "components/TableCard";
 import Sidebar from "components/Sidebar";
-
+import axios from "axios";
 import Footer from "components/Footer";
 export default function Dashboard() {
   const { id } = useParams();
+  const [visitorsCount, setVisitorsCount] = useState(null);
+  useEffect(() => {
+    const fetchVisitors = async () => {
+      var URL = "/api/building/" + id;
+      const { data } = await axios.get(URL).catch((err) => console.log(err));
 
+      setVisitorsCount(data.visitors.length);
+    };
+    setInterval(() => {
+      fetchVisitors();
+    }, 4000);
+    fetchVisitors();
+  }, []);
   return (
     <>
       <Sidebar bid={id} />
@@ -20,13 +32,13 @@ export default function Dashboard() {
               color="pink"
               icon="trending_up"
               title="Visitors Past Month"
-              amount="350,897"
+              amount={visitorsCount && visitorsCount}
             />
             <StatusCard
               color="orange"
               icon="groups"
               title="Visitors Today"
-              amount="2,356"
+              amount={visitorsCount && visitorsCount}
             />
           </div>
         </div>

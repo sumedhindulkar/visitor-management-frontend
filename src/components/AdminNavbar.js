@@ -23,7 +23,7 @@ export default function AdminNavbar({ showSidebar, setShowSidebar }) {
             ripple="light"
             onClick={() => setShowSidebar("left-0")}
           >
-            <Icon name="menu" size="2xl" color="white" />
+            {/* <Icon name="menu" size="2xl" color="white" /> */}
           </Button>
           <div
             className={`absolute top-2 md:hidden ${
@@ -53,7 +53,7 @@ export default function AdminNavbar({ showSidebar, setShowSidebar }) {
           </h4>
 
           <div className="flex">
-            <NavbarInput placeholder="Search" />
+            <NavbarInput />
 
             <div className="-mr-4 ml-6">
               <Dropdown

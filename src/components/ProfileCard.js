@@ -1,16 +1,26 @@
 import Card from "@material-tailwind/react/Card";
 import CardBody from "@material-tailwind/react/CardBody";
-import CardFooter from "@material-tailwind/react/CardFooter";
 import Image from "@material-tailwind/react/Image";
 import H5 from "@material-tailwind/react/Heading5";
-import Icon from "@material-tailwind/react/Icon";
 import LeadText from "@material-tailwind/react/LeadText";
-import Button from "@material-tailwind/react/Button";
-// import ProfilePicture from "assets/img/team-1-800x800.jpg";
 import b1 from "assets/img/b1.jpg";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PersonIcon from "@mui/icons-material/Person";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 export default function ProfileCard() {
+  const { id } = useParams();
+  const [building, setBuilding] = useState(null);
+  useEffect(() => {
+    const fetchVisitors = async () => {
+      var URL = "/api/building/" + id;
+      const { data } = await axios.get(URL).catch((err) => console.log(err));
+
+      setBuilding(data);
+    };
+    fetchVisitors();
+  }, []);
   return (
     <Card>
       <div className="flex flex-wrap justify-center">
@@ -39,13 +49,13 @@ export default function ProfileCard() {
         </div>
       </div>
       <div className="text-center">
-        <H5 color="gray">Runwals Olive</H5>
+        <H5 color="gray">{building && building.name}</H5>
         <div className="mt-0 mb-2 text-gray-700 flex items-center justify-center gap-2">
           <LocationOnIcon />
           Mulund west mumbai 400080
         </div>
         <div className="mb-2 text-gray-700 mt-10 flex items-center justify-center gap-2">
-          <PersonIcon /> Manager - Harshad Mehta
+          <PersonIcon /> Secretary - Harshad Mehta
         </div>
         <div className="mb-2 text-gray-700 flex items-center justify-center gap-2">
           {/* <Icon name="account_balance" size="xl" /> */}
@@ -62,19 +72,6 @@ export default function ProfileCard() {
           </LeadText>
         </div>
       </CardBody>
-      {/* <CardFooter>
-                <div className="w-full flex justify-center -mt-8">
-                    <a
-                        href="#pablo"
-                        className="mt-5"
-                        onClick={(e) => e.preventDefault()}
-                    >
-                        <Button color="purple" buttonType="link" ripple="dark">
-                            Show more
-                        </Button>
-                    </a>
-                </div>
-            </CardFooter> */}
     </Card>
   );
 }

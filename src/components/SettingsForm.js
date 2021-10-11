@@ -10,7 +10,7 @@ export default function SettingsForm() {
     <Card>
       <CardHeader color="purple" contentPosition="none">
         <div className="w-full flex items-center justify-between">
-          <h2 className="text-white text-2xl">Update My Account Information</h2>
+          <h2 className="text-white text-2xl">Save My Account Information</h2>
           <Button
             color="transparent"
             buttonType="link"
@@ -33,7 +33,7 @@ export default function SettingsForm() {
             <div className="w-full lg:w-6/12 pl-4 mb-10 font-light">
               <Input type="email" color="purple" placeholder="Email Address" />
             </div>
-            {/* <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
+            <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
               <Input
                 type="text"
                 color="purple"
@@ -46,7 +46,7 @@ export default function SettingsForm() {
                 color="purple"
                 placeholder="Total number of wings"
               />
-            </div> */}
+            </div>
           </div>
 
           <h6 className="text-purple-500 text-sm my-6 font-light uppercase">
@@ -56,15 +56,19 @@ export default function SettingsForm() {
             <div className="w-full lg:w-12/12 mb-10 font-light">
               <Input type="text" color="purple" placeholder="Address" />
             </div>
-            <div className="w-full lg:w-4/12 pr-4 mb-10 font-light">
-              <Input type="text" color="purple" placeholder="City" />
+            <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
+              <Input type="text" color="purple" placeholder="Secretary Name" />
             </div>
-            <div className="w-full lg:w-4/12 px-4 mb-10 font-light">
-              <Input type="text" color="purple" placeholder="Country" />
+            <div className="w-full lg:w-6/12 pr-4 mb-10 font-light">
+              <Input
+                type="text"
+                color="purple"
+                placeholder="Secretary Phone no."
+              />
             </div>
-            <div className="w-full lg:w-4/12 pl-4 mb-10 font-light">
+            {/* <div className="w-full lg:w-4/12 pl-4 mb-10 font-light">
               <Input type="text" color="purple" placeholder="Postal Code" />
-            </div>
+            </div> */}
           </div>
 
           {/* <h6 className="text-purple-500 text-sm my-6 font-light uppercase">

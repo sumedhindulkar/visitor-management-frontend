@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Footer from "components/Footer";
 export default function Dashboard() {
   const { id } = useParams();
+
   return (
     <>
       <Sidebar bid={id} />

@@ -5,8 +5,10 @@ import ProfilePage from "pages/building/ProfilePage";
 import Settings from "pages/building/Settings";
 import BuildingVisitorForm from "pages/BuildingVisitorForm";
 import ScanQR from "pages/ScanQR";
-import VisitorForm from "components/VisitorForm";
 import "assets/styles/tailwind.css";
+import "assets/styles/app.css";
+import Signup from "pages/Signup";
+import Login from "pages/Login";
 function App() {
   return (
     <>
@@ -27,6 +29,9 @@ function App() {
             path="/building/:bid/form/:uid"
             component={BuildingVisitorForm}
           />
+          {/* Signup */}
+          <Route exact path="/signup" component={Signup} />
+          <Route exact path="/login" component={Login} />
 
           <Redirect from="*" to="/building/614c73d775c63e60e419ab85" />
         </Switch>

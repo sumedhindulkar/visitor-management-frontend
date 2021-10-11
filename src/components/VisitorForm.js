@@ -36,6 +36,8 @@ export default function VisitorForm() {
       return {
         vName: "",
         vPhone: "",
+        visitAddress: "",
+        visitReason: "",
       };
     });
   };
@@ -59,7 +61,7 @@ export default function VisitorForm() {
           </div>
           <form onSubmit={submit} class="form-detail">
             <h2>Visitor Form of {buildingDetails && buildingDetails.name}</h2>
-            <div class="form-row">
+            {/* <div class="form-row">
               <input
                 type="text"
                 name="vName"
@@ -78,7 +80,7 @@ export default function VisitorForm() {
                 placeholder="Phone number"
                 required
               />
-            </div>
+            </div> */}
             <div class="form-row">
               <input
                 type="text"
