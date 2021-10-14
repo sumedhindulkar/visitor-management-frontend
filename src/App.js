@@ -9,6 +9,8 @@ import "assets/styles/tailwind.css";
 import "assets/styles/app.css";
 import Signup from "pages/Signup";
 import Login from "pages/Login";
+import RegisterBuilding from "pages/RegisterBuilding";
+import RegisterUser from "pages/RegisterUser";
 function App() {
   return (
     <>
@@ -19,9 +21,11 @@ function App() {
           <Route exact path="/building/:id/GenerateQR" component={GenerateQR} />
           <Route exact path="/building/:id/profile" component={ProfilePage} />
           <Route exact path="/building/:id/settings" component={Settings} />
+          <Route exact path="/RegisterBuilding" component={RegisterBuilding} />
 
           {/* User routes */}
           <Route exact path="/user/:uid/scanQR" component={ScanQR} />
+          <Route exact path="/RegisterUser" component={RegisterUser} />
 
           {/* Visitor Form for building */}
           <Route
@@ -33,7 +37,8 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/login" component={Login} />
 
-          <Redirect from="*" to="/building/614c73d775c63e60e419ab85" />
+          {/* <Redirect from="*" to="/building/614c73d775c63e60e419ab85" /> */}
+          <Redirect from="*" to="/RegisterBuilding" />
         </Switch>
       </div>
     </>

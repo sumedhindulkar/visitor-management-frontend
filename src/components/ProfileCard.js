@@ -25,7 +25,7 @@ export default function ProfileCard() {
     <Card>
       <div className="flex flex-wrap justify-center">
         <div className="w-48 px-4 -mt-24">
-          <Image src={b1} rounded raised />
+          <Image src={building && building.photo} rounded raised />
         </div>
         <div className="w-full flex justify-center py-4 lg:pt-4 pt-8">
           <div className="p-4 text-center">

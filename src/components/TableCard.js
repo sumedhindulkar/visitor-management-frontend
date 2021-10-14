@@ -19,7 +19,7 @@ export default function CardTable({ bid }) {
     fetchVisitors();
     setInterval(() => {
       fetchVisitors();
-    }, 4000);
+    }, 5000);
   }, []);
 
   return (
@@ -74,7 +74,7 @@ export default function CardTable({ bid }) {
                         <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
                           <div className="flex">
                             <div className="w-10 h-10 rounded-full border-2 border-white ">
-                              <Image src={Team4} rounded alt="..." />
+                              <Image src={item.vPhoto} rounded alt="..." />
                             </div>
                           </div>
                         </th>
@@ -82,7 +82,7 @@ export default function CardTable({ bid }) {
                           {new Date(item.visitTime).toLocaleTimeString()}
                         </th>
                         <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          Relative
+                          {item.visitReason}
                         </th>
                       </tr>
                     );

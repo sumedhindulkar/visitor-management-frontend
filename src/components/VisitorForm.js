@@ -19,6 +19,7 @@ export default function VisitorForm() {
       setVisitorsDetails({
         vName: data.name,
         vPhone: data.phone,
+        vPhoto: data.photo,
         visitAddress: "",
         visitReason: "",
       });
@@ -42,6 +43,7 @@ export default function VisitorForm() {
     });
   };
   const submit = async (event) => {
+    event.preventDefault();
     const URL = "/api/building/" + bid + "/visitor";
     await axios({
       url: URL,
