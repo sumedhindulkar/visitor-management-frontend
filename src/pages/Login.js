@@ -17,18 +17,20 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setError("");
-      const status = await axios({
-        url: "/login",
-        method: "POST",
-        data: {
-          email: "pravin@goomail.com",
-          name: "pravin",
+      const config = {
+        headers: {
+          "Content-type": "application/json",
         },
-      });
+      };
+      const data = {
+        email: emailRef,
+        name: passwordRef,
+      };
+      setError("");
+      const status = await axios.post("/login", data, config);
       console.log("login status", status);
     } catch (err) {
-      setError("Failed to create");
+      setError("Failed to Login:" + err.response.data.message);
       console.log(err);
     }
   };

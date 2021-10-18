@@ -11,7 +11,7 @@ import "assets/styles/app.css";
 import axios from "axios";
 
 export default function RegisterBuilding() {
-  const [data, setData] = useState({
+  const [userData, setUserData] = useState({
     name: "",
     password: "",
     photo: "",
@@ -20,12 +20,12 @@ export default function RegisterBuilding() {
   const [error, setError] = useState("");
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => {
+    setUserData((prev) => {
       return { ...prev, [name]: value };
     });
   };
   // const handlePhoto = (e) => {
-  //   setData((prev) => {
+  //   setUserData((prev) => {
   //     return { ...prev, photo: e.target.files };
   //   });
   // };
@@ -33,14 +33,15 @@ export default function RegisterBuilding() {
     e.preventDefault();
     try {
       setError("");
-      const status = await axios({
+      var { data } = await axios({
         url: "/api/users",
         method: "POST",
-        data: data,
+        data: userData,
       });
-      console.log("login status", status);
+      console.log(userData);
+      localStorage.setItem("userInfo", JSON.stringify(data.token));
     } catch (err) {
-      setError("Failed to create your account" + err);
+      setError("Failed to create your account" + err.response.data.message);
       console.log(err);
     }
   };
@@ -65,7 +66,7 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="Name"
                   onChange={handleChange}
-                  value={data.name}
+                  value={userData.name}
                 />
               </div>
 
@@ -76,14 +77,14 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="Email Address"
                   onChange={handleChange}
-                  value={data.email}
+                  value={userData.email}
                 />
               </div>
               <div className="mb-4 d-flex px-4">
                 <FileBase64
                   multiple={false}
                   onDone={({ base64 }) => {
-                    setData((prev) => {
+                    setUserData((prev) => {
                       return { ...prev, photo: base64 };
                     });
                   }}
@@ -104,7 +105,7 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="Password"
                   onChange={handleChange}
-                  value={data.password}
+                  value={userData.password}
                 />
               </div>
             </CardBody>
