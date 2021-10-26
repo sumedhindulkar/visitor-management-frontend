@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Card from "@material-tailwind/react/Card";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardBody from "@material-tailwind/react/CardBody";
@@ -9,15 +10,30 @@ import Alert from "@material-tailwind/react/Alert";
 import FileBase64 from "react-file-base64";
 import "assets/styles/app.css";
 import axios from "axios";
-
+import Loader from "components/Loader";
+import jwt from "jsonwebtoken";
 export default function RegisterBuilding() {
   const [userData, setUserData] = useState({
     name: "",
     password: "",
     photo: "",
     email: "",
+    phone: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  // const [user, setUser] = useState(false);
+  // useEffect(() => {
+  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  //   if (userInfo) {
+  //     console.log(userInfo.user.id);
+  //     const link = "/user/" + userInfo.user.id + "/scanQR";
+  //     history.push(link);
+  //   }
+  // }, [history]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserData((prev) => {
@@ -29,9 +45,20 @@ export default function RegisterBuilding() {
   //     return { ...prev, photo: e.target.files };
   //   });
   // };
+  const resetInputs = () => {
+    setUserData({
+      name: "",
+      password: "",
+      photo: "",
+      email: "",
+      phone: "",
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      setLoading(true);
       setError("");
       var { data } = await axios({
         url: "/api/users",
@@ -39,12 +66,19 @@ export default function RegisterBuilding() {
         data: userData,
       });
       console.log(userData);
-      localStorage.setItem("userInfo", JSON.stringify(data.token));
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      const id = JSON.parse(localStorage.getItem("userInfo")).user.id;
+      const link = "/user/" + id + "/profile";
+      history.push(link);
+      resetInputs();
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       setError("Failed to create your account" + err.response.data.message);
       console.log(err);
     }
   };
+
   return (
     <>
       <div className="signup -ml-64 d-flex justify-content-center align-items-center h-100">
@@ -59,6 +93,7 @@ export default function RegisterBuilding() {
                   <Alert color="deepOrange">{error}</Alert>
                 </div>
               )}
+              {loading && <Loader />}
               <div className="mb-8 px-4">
                 <input
                   name="name"
@@ -95,6 +130,7 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="10 digit Phone number"
                   pattern="[0-9]{10}"
+                  value={userData.phone}
                   onChange={handleChange}
                 />
               </div>

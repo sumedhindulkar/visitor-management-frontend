@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "assets/styles/visitorform.css";
 import b1 from "assets/img/b1.jpg";
+import { useHistory } from "react-router-dom";
 export default function VisitorForm() {
+  const history = useHistory();
   const { bid, uid } = useParams();
   const [visitorDetails, setVisitorsDetails] = useState(null);
   const [buildingDetails, setBuildingDetails] = useState(null);
@@ -53,6 +55,8 @@ export default function VisitorForm() {
       console.log(err);
     });
     resetInputs();
+    const link = "/user/" + uid + "/profile";
+    history.push(link);
   };
   return (
     <div className="visitor-form">
@@ -88,7 +92,7 @@ export default function VisitorForm() {
                 type="text"
                 name="visitAddress"
                 class="input-text"
-                placeholder="Address eg. B402"
+                placeholder="Flat No. to visit eg. B402"
                 required
                 onChange={addVisitorHandleChange}
               />

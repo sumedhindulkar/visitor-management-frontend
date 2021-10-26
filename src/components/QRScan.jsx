@@ -5,7 +5,7 @@ import CardRow from "@material-tailwind/react/CardRow";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardStatus from "@material-tailwind/react/CardStatus";
 import CardStatusFooter from "@material-tailwind/react/CardStatusFooter";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
 import H5 from "@material-tailwind/react/Heading5";
 
 import TimelineIcon from "@mui/icons-material/Timeline";
@@ -93,8 +93,11 @@ export default function App({ color, title, amount }) {
                 <div className="w-full flex  justify-center py-3 lg:pb-4">
                   {scanResult && (
                     <H5>
+                      {/* <NavLink to={"hello" + scanResult + "world" + uid}>
+                        Lets visit
+                      </NavLink> */}
                       <a href={scanResult + uid} target="blank">
-                        Lets visit Sensei
+                        Lets Visit
                       </a>
                     </H5>
                   )}

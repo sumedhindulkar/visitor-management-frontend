@@ -10,6 +10,8 @@ export default function CardTable({ bid }) {
   const date = new Date();
   const today = date.toDateString();
   const [visitors, setVisitors] = useState(null);
+  const [visitorDate, setVisitorDate] = useState(null);
+  var dateChange = new Date().getDate();
   useEffect(() => {
     const fetchVisitors = async () => {
       var URL = "/api/building/" + bid;
@@ -21,7 +23,13 @@ export default function CardTable({ bid }) {
       fetchVisitors();
     }, 5000);
   }, []);
-
+  const changeDate = (e) => {
+    if (dateChange != e) {
+      dateChange = e;
+      return true;
+    }
+    return false;
+  };
   return (
     <Card>
       <CardHeader color="blue" contentPosition="left">
@@ -60,31 +68,38 @@ export default function CardTable({ bid }) {
                   .reverse()
                   .map((item) => {
                     return (
-                      <tr>
-                        <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          {item.vName}
-                        </th>
-                        <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          {item.vPhone}
-                        </th>
-                        <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          <i className="fas fa-circle fa-sm text-orange-500 mr-2"></i>{" "}
-                          {item.visitAddress}
-                        </th>
-                        <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          <div className="flex">
-                            <div className="w-10 h-10 rounded-full border-2 border-white ">
-                              <Image src={item.vPhoto} rounded alt="..." />
-                            </div>
+                      <>
+                        {changeDate(new Date(item.visitTime).getDate()) ? (
+                          <div style={{ backgroundColor: "lightgrey" }}>
+                            {new Date(item.visitTime).toDateString()}
                           </div>
-                        </th>
-                        <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          {new Date(item.visitTime).toLocaleTimeString()}
-                        </th>
-                        <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
-                          {item.visitReason}
-                        </th>
-                      </tr>
+                        ) : null}
+                        <tr>
+                          <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                            {item.vName}
+                          </th>
+                          <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                            {item.vPhone}
+                          </th>
+                          <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                            <i className="fas fa-circle fa-sm text-orange-500 mr-2"></i>{" "}
+                            {item.visitAddress}
+                          </th>
+                          <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                            <div className="flex">
+                              <div className="w-10 h-10 rounded-full border-2 border-white ">
+                                <Image src={item.vPhoto} rounded alt="..." />
+                              </div>
+                            </div>
+                          </th>
+                          <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                            {new Date(item.visitTime).toLocaleTimeString()}
+                          </th>
+                          <th className="border-b border-gray-200 align-middle font-light text-sm whitespace-nowrap px-2 py-4 text-left">
+                            {item.visitReason}
+                          </th>
+                        </tr>
+                      </>
                     );
                   })}
             </tbody>
