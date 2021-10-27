@@ -9,10 +9,12 @@ import Alert from "@material-tailwind/react/Alert";
 
 import "assets/styles/app.css";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const history = useHistory();
   const [error, setError] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,12 +26,16 @@ export default function Login() {
       console.log(userData);
       setError("");
       // const status = await axios.post("/login/user", data, config);
-      var status = await axios({
+      var { data } = await axios({
         url: "/api/login/user",
         method: "POST",
         data: userData,
       });
-      console.log("login status", status);
+      // console.log("login status", status);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      const id = JSON.parse(localStorage.getItem("userInfo")).user.id;
+      const link = "/user/" + id + "/profile";
+      history.push(link);
     } catch (err) {
       setError("Failed to Login:" + err);
       console.log(err);

@@ -65,7 +65,7 @@ export default function RegisterBuilding() {
         method: "POST",
         data: userData,
       });
-      console.log(userData);
+      // console.log(userData);
       localStorage.setItem("userInfo", JSON.stringify(data));
       const id = JSON.parse(localStorage.getItem("userInfo")).user.id;
       const link = "/user/" + id + "/profile";
