@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Card from "@material-tailwind/react/Card";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardBody from "@material-tailwind/react/CardBody";
@@ -9,41 +10,77 @@ import Alert from "@material-tailwind/react/Alert";
 import FileBase64 from "react-file-base64";
 import "assets/styles/app.css";
 import axios from "axios";
-
+import Loader from "components/Loader";
+import jwt from "jsonwebtoken";
 export default function RegisterBuilding() {
-  const [data, setData] = useState({
+  const [userData, setUserData] = useState({
     name: "",
     password: "",
     photo: "",
     email: "",
+    phone: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
+  // const [user, setUser] = useState(false);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (userInfo) {
+      if (!userInfo.user) {
+        localStorage.removeItem("userInfo");
+      }
+      const link = "/building/" + userInfo.user.id;
+      history.push(link);
+    }
+  }, [history]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prev) => {
+    setUserData((prev) => {
       return { ...prev, [name]: value };
     });
   };
   // const handlePhoto = (e) => {
-  //   setData((prev) => {
+  //   setUserData((prev) => {
   //     return { ...prev, photo: e.target.files };
   //   });
   // };
+  const resetInputs = () => {
+    setUserData({
+      name: "",
+      password: "",
+      photo: "",
+      email: "",
+      phone: "",
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      setLoading(true);
       setError("");
-      const status = await axios({
+      var { data } = await axios({
         url: "/api/building",
         method: "POST",
-        data: data,
+        data: userData,
       });
-      console.log("login status", status);
+      // console.log(userData);
+      localStorage.setItem("userInfo", JSON.stringify(data));
+      const id = JSON.parse(localStorage.getItem("userInfo")).user.id;
+      const link = "/building/" + id;
+      history.push(link);
+      resetInputs();
+      setLoading(false);
     } catch (err) {
-      setError("Failed to create your account");
+      setLoading(false);
+      setError("Failed to create your account" + err.response.data.message);
       console.log(err);
     }
   };
+
   return (
     <>
       <div className="signup -ml-64 d-flex justify-content-center align-items-center h-100">
@@ -58,6 +95,7 @@ export default function RegisterBuilding() {
                   <Alert color="deepOrange">{error}</Alert>
                 </div>
               )}
+              {loading && <Loader />}
               <div className="mb-8 px-4">
                 <input
                   name="name"
@@ -65,7 +103,7 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="Name"
                   onChange={handleChange}
-                  value={data.name}
+                  value={userData.name}
                 />
               </div>
 
@@ -76,25 +114,26 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="Email Address"
                   onChange={handleChange}
-                  value={data.email}
+                  value={userData.email}
                 />
               </div>
               <div className="mb-4 d-flex px-4">
-                {/* <input
-                  type="file"
-                  accept=".png, .jpg, .jpeg"
-                  name="photo"
-                  color="lightBlue"
-                  placeholder="photo"
-                  onChange={handleChange}
-                /> */}
                 <FileBase64
                   multiple={false}
                   onDone={({ base64 }) => {
-                    setData((prev) => {
+                    setUserData((prev) => {
                       return { ...prev, photo: base64 };
                     });
                   }}
+                />
+                <input
+                  type="tel"
+                  name="phone"
+                  color="lightBlue"
+                  placeholder="10 digit Phone number"
+                  pattern="[0-9]{10}"
+                  value={userData.phone}
+                  onChange={handleChange}
                 />
               </div>
               <div className="mb-4 px-4">
@@ -104,7 +143,7 @@ export default function RegisterBuilding() {
                   color="lightBlue"
                   placeholder="Password"
                   onChange={handleChange}
-                  value={data.password}
+                  value={userData.password}
                 />
               </div>
             </CardBody>

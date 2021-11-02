@@ -10,7 +10,8 @@ export default function CardTable({ bid }) {
   const date = new Date();
   const today = date.toDateString();
   const [visitors, setVisitors] = useState(null);
-  const [visitorDate, setVisitorDate] = useState(null);
+  // const [visitorDate, setVisitorDate] = useState(null);
+  const [visitorsToday, setVisitorsToday] = useState(0);
   var dateChange = new Date().getDate();
   useEffect(() => {
     const fetchVisitors = async () => {

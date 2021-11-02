@@ -12,7 +12,7 @@ import "assets/styles/app.css";
 import axios from "axios";
 import Loader from "components/Loader";
 import jwt from "jsonwebtoken";
-export default function RegisterBuilding() {
+export default function RegisterUser() {
   const [userData, setUserData] = useState({
     name: "",
     password: "",
@@ -24,15 +24,15 @@ export default function RegisterBuilding() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   // const [user, setUser] = useState(false);
-  // useEffect(() => {
-  //   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
-  //   if (userInfo) {
-  //     console.log(userInfo.user.id);
-  //     const link = "/user/" + userInfo.user.id + "/scanQR";
-  //     history.push(link);
-  //   }
-  // }, [history]);
+    if (userInfo) {
+      console.log(userInfo.user.id);
+      const link = "/user/" + userInfo.user.id + "/profile";
+      history.push(link);
+    }
+  }, [history]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

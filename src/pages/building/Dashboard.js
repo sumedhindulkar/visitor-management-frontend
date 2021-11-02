@@ -8,12 +8,24 @@ import Footer from "components/Footer";
 export default function Dashboard() {
   const { id } = useParams();
   const [visitorsCount, setVisitorsCount] = useState(null);
+  const [visitorsToday, setVisitorsToday] = useState(0);
+
   useEffect(() => {
     const fetchVisitors = async () => {
       var URL = "/api/building/" + id;
       const { data } = await axios.get(URL).catch((err) => console.log(err));
 
       setVisitorsCount(data.visitors.length);
+      // data.visitors.map((item, i) => {
+      //   if (new Date(item.visitTime).getDate() == new Date().getDate()) {
+      //     return setVisitorsToday(visitorsToday + 1);
+      //   }
+
+      // });
+      // console.log(
+      //   new Date(data.visitors.visitTime).getDate(),
+      //   new Date().getDate()
+      // );
     };
     setInterval(() => {
       fetchVisitors();
@@ -31,14 +43,14 @@ export default function Dashboard() {
             <StatusCard
               color="pink"
               icon="trending_up"
-              title="Visitors Past Month"
+              title="Visitors This Month"
               amount={visitorsCount && visitorsCount}
             />
             <StatusCard
               color="orange"
               icon="groups"
               title="Visitors Today"
-              amount={visitorsCount && visitorsCount}
+              amount={visitorsCount && visitorsToday}
             />
           </div>
         </div>

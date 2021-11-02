@@ -13,6 +13,8 @@ import "assets/styles/app.css";
 import Login from "pages/Login";
 import RegisterBuilding from "pages/RegisterBuilding";
 import RegisterUser from "pages/RegisterUser";
+import Thankyou from "pages/Thankyou";
+var jwt = require("jsonwebtoken");
 function App() {
   const history = useHistory();
   // const [user, setUser] = useState(false);
@@ -22,10 +24,16 @@ function App() {
     //   const link = "/RegisterUser";
     //   history.push(link);
     // }
-    // if (userInfo) {
-    //   console.log(userInfo.user.id);
-    //   const link = "/user/" + userInfo.user.id + "/scanQR";
-    //   // history.push(link);
+    // if (!userInfo.user.isBuilding) {
+    //   var id = jwt.decode(userInfo.token.id);
+    //   // console.log(userInfo.user.id);
+    //   const link = "/user/" + userInfo.user.id + "/profile";
+    //   history.push(link);
+    // }
+    // if (userInfo.user.isBuilding) {
+    //   var decode = jwt.decode(userInfo.token);
+    //   const link = "/user/" + decode + "/profile";
+    //   history.push(link);
     // }
   }, [history]);
 
@@ -54,9 +62,10 @@ function App() {
           />
           {/* Signup */}
           <Route exact path="/login" component={Login} />
+          <Route exact path="/Thankyou" component={Thankyou} />
 
           {/* <Redirect from="*" to="/building/614c73d775c63e60e419ab85" /> */}
-          <Redirect from="*" to="/RegisterUser" />
+          <Redirect from="*" to="/login" />
         </Switch>
       </div>
     </>

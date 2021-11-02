@@ -56,7 +56,7 @@ export default function VisitorForm() {
     });
     resetInputs();
     const link = "/user/" + uid + "/profile";
-    history.push(link);
+    history.push("/thankyou");
   };
   return (
     <div className="visitor-form">

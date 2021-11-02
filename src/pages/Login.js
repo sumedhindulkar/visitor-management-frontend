@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Card from "@material-tailwind/react/Card";
 import CardHeader from "@material-tailwind/react/CardHeader";
 import CardBody from "@material-tailwind/react/CardBody";
@@ -16,6 +16,16 @@ export default function Login() {
   const passwordRef = useRef();
   const history = useHistory();
   const [error, setError] = useState("");
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (userInfo) {
+      console.log(userInfo.user.id);
+      const link = "/user/" + userInfo.user.id + "/profile";
+      history.push(link);
+    }
+  }, [history]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
