@@ -1,3 +1,6 @@
+.home {
+  background-image: linear-gradient(to right, #fc5c7d, #6a82fb);
+}
 .d-flex {
   display: flex !important;
 }

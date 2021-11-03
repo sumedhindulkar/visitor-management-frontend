@@ -11,7 +11,9 @@ import FileBase64 from "react-file-base64";
 import "assets/styles/app.css";
 import axios from "axios";
 import Loader from "components/Loader";
-import jwt from "jsonwebtoken";
+
+import Tooltips from "@material-tailwind/react/Tooltips";
+import TooltipContents from "@material-tailwind/react/TooltipsContent";
 export default function RegisterUser() {
   const [userData, setUserData] = useState({
     name: "",
@@ -22,6 +24,7 @@ export default function RegisterUser() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const buttonRef = useRef();
   const history = useHistory();
   // const [user, setUser] = useState(false);
   useEffect(() => {
@@ -115,15 +118,20 @@ export default function RegisterUser() {
                   value={userData.email}
                 />
               </div>
+              {/* <div className="mb-4 d-flex px-4">
+                <label>upload your photo file size less than 60kb</label>
+              </div> */}
               <div className="mb-4 d-flex px-4">
-                <FileBase64
-                  multiple={false}
-                  onDone={({ base64 }) => {
-                    setUserData((prev) => {
-                      return { ...prev, photo: base64 };
-                    });
-                  }}
-                />
+                <div ref={buttonRef}>
+                  <FileBase64
+                    multiple={false}
+                    onDone={({ base64 }) => {
+                      setUserData((prev) => {
+                        return { ...prev, photo: base64 };
+                      });
+                    }}
+                  />
+                </div>
                 <input
                   type="tel"
                   name="phone"
@@ -133,7 +141,13 @@ export default function RegisterUser() {
                   value={userData.phone}
                   onChange={handleChange}
                 />
+                <Tooltips placement="left" ref={buttonRef}>
+                  <TooltipContents>
+                    Please upload your photo size between 0 kb to 60 kb
+                  </TooltipContents>
+                </Tooltips>
               </div>
+
               <div className="mb-4 px-4">
                 <input
                   type="password"

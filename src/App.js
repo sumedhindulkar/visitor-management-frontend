@@ -14,6 +14,7 @@ import Login from "pages/Login";
 import RegisterBuilding from "pages/RegisterBuilding";
 import RegisterUser from "pages/RegisterUser";
 import Thankyou from "pages/Thankyou";
+import Home from "pages/Home";
 var jwt = require("jsonwebtoken");
 function App() {
   const history = useHistory();
@@ -63,9 +64,10 @@ function App() {
           {/* Signup */}
           <Route exact path="/login" component={Login} />
           <Route exact path="/Thankyou" component={Thankyou} />
+          <Route exact path="/Home" component={Home} />
 
           {/* <Redirect from="*" to="/building/614c73d775c63e60e419ab85" /> */}
-          <Redirect from="*" to="/login" />
+          <Redirect from="*" to="/Home" />
         </Switch>
       </div>
     </>
